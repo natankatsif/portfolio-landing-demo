@@ -80,4 +80,4 @@ If you like this or want to collaborate:
 ---
 
 > **"I believe strong ideas need strong presentation. This is mine."**  
-🧑‍💻 — Natan Katsif
+��‍💻 — Natan Katsif
