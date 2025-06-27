@@ -48,6 +48,7 @@ Built with 💡 _Next.js 15, Tailwind CSS 4, and TypeScript_ to showcase fronten
 
 ## 📁 Project Structure
 
+```bash
 launch-ui-adapted/
 ├── app/
 │   ├── layout.tsx
@@ -59,7 +60,7 @@ launch-ui-adapted/
 │   └── globals.css
 ├── tailwind.config.ts
 └── README.md
-
+```
 ---
 
 ## 🤝 Credits & License
