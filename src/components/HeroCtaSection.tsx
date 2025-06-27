@@ -39,7 +39,10 @@ export default function HeroCtaSection() {
         </a>
       </motion.div>
       {/* Glow-эффект */}
-      <div className="absolute -bottom-[390px] w-[800px] h-[350px] bg-gradient-to-t from-brand to-transparent rounded-full blur-3xl z-0 pointer-events-none" />
+      <div
+        className="absolute -bottom-[390px] w-[800px] h-[350px] bg-gradient-to-t from-brand to-transparent rounded-full blur-2xl z-0 pointer-events-none"
+        style={{ willChange: 'filter', transform: 'translateZ(0)' }}
+      />
     </motion.section>
   );
 } 

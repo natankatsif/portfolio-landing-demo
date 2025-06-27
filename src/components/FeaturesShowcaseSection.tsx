@@ -53,17 +53,20 @@ export default function FeaturesShowcaseSection() {
         </p>
       </motion.div>
       <div className="w-full h-full lg:mt-32 mt-12 flex flex-col lg:flex-row items-start justify-center md:gap-12 gap-8 px-4 md:px-8">
-        <div className="flex flex-col gap-4 lg:gap-6 w-full  lg:max-w-none  md:justify-start md:items-start md:self-start">
+        <motion.div
+          className="flex flex-col gap-4 lg:gap-6 w-full  lg:max-w-none  md:justify-start md:items-start md:self-start"
+          style={{ minHeight: 240 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+        >
           {features.map((f, i) => (
-            <motion.button
+            <button
               key={f.key}
               onClick={() => setActive(f.key)}
               className={`flex items-start gap-3 px-6 py-5  rounded-2xl  transition-all text-left w-full
                 ${active === f.key ? "bg-gradient-to-t from-white/5 to-white/10" : ""}`}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.5, delay: i * 0.09, ease: "easeOut" }}
             >
               <img
                 src={f.icon}
@@ -74,9 +77,9 @@ export default function FeaturesShowcaseSection() {
                 <span className={`font-semibold text-white text-base mb-1 ${active === f.key ? "" : "opacity-80"}`}>{f.title}</span>
                 <span className="text-sm text-gray-400 leading-snug">{f.desc}</span>
               </span>
-            </motion.button>
+            </button>
           ))}
-        </div>
+        </motion.div>
         <motion.div
           className="relative h-full flex flex-col items-center justify-center w-full"
           initial={{ opacity: 0, y: 30 }}

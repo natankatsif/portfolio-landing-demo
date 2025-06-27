@@ -76,19 +76,21 @@ export default function PricingSection() {
           Choose the plan that fits your needs. No hidden fees.
         </p>
       </motion.div>
-      <div className="flex flex-col md:flex-row md:mt-24 gap-8 md:gap-10 justify-center items-stretch max-w-4xl md:max-w-8xl mx-auto">
+      <motion.div
+        className="flex flex-col md:flex-row md:mt-24 gap-8 md:gap-10 justify-center items-stretch max-w-4xl md:max-w-8xl mx-auto"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+      >
         {plans.map((plan, idx) => (
-          <motion.div
+          <div
             key={plan.name}
             className={
               `flex-1 rounded-2xl p-8 flex flex-col relative overflow-hidden ` +
               `${plan.highlight ? "border-0 bg-gradient-to-b from-amber-100/10 to-zinc-900/10 shadow-xl" : ""} ` +
               `transition-all ${plan.name === "Free" ? "hidden lg:flex" : ""} min-w-[260px] max-w-full md:max-w-[370px] lg:max-w-[400px]`
             }
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6, delay: idx * 0.12, ease: "easeOut" }}
           >
             {plan.highlight ? (
               <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-[120%] h-32 bg-gradient-to-b from-brand/30 to-transparent rounded-full blur-2xl z-0" />
@@ -140,13 +142,9 @@ export default function PricingSection() {
               <div className="border-b border-zinc-700 mb-4" />
               <ul className="space-y-3 text-sm text-white/90 flex-1">
                 {plan.features.map((f, i) => (
-                  <motion.li
+                  <li
                     key={f}
                     className="flex items-start gap-2"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.2 }}
-                    transition={{ duration: 0.4, delay: i * 0.07, ease: "easeOut" }}
                   >
                     <svg
                       width="18"
@@ -171,13 +169,13 @@ export default function PricingSection() {
                       />
                     </svg>
                     <span>{f}</span>
-                  </motion.li>
+                  </li>
                 ))}
               </ul>
             </div>
-          </motion.div>
+          </div>
         ))}
-      </div>
+      </motion.div>
     </motion.section>
   );
 }

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 const testimonials = [
@@ -48,20 +48,31 @@ const testimonials = [
 export default function TestimonialsSection() {
   const loopedTestimonials = [...testimonials, ...testimonials];
 
+  const rowRef = useRef<HTMLDivElement>(null);
+  const [rowWidth, setRowWidth] = useState<number>(0);
+
+  useEffect(() => {
+    if (rowRef.current) {
+      const children = Array.from(rowRef.current.children);
+      let width = 0;
+      const half = children.length / 2;
+      for (let i = 0; i < half; i++) {
+        width += (children[i] as HTMLElement).offsetWidth;
+      }
+      setRowWidth(width);
+    }
+  }, []);
+
   return (
-    <motion.section
-      initial={{ opacity: 0, y: 60 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+    <section
       className="bg-background container self-center text-foreground mt-32 sm:mt-24 md:mt-8 "
     >
-      <div className="mx-auto flex  flex-col items-center gap-4 sm:gap-16">
+      <div className="mx-auto flex flex-col items-center gap-4 sm:gap-16">
         <motion.div
           className="flex flex-col items-center gap-4 px-4 sm:gap-8"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
+          viewport={{ once: true, amount: 0.8 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
           <h2 className="text-center text-3xl font-semibold leading-tight sm:text-5xl sm:leading-tight">
@@ -71,7 +82,13 @@ export default function TestimonialsSection() {
             Here&apos;s what people are saying about Launch UI
           </p>
         </motion.div>
-        <div className=" flex flex-col items-center justify-center sm:hidden mt-8">
+        <motion.div
+          className="flex flex-col items-center justify-center sm:hidden mt-8"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+        >
           <div className="grid grid-cols-1 gap-4 w-full ">
             {testimonials.slice(0, 3).map((testimonial, i) => (
               <TestimonialCard
@@ -82,11 +99,21 @@ export default function TestimonialsSection() {
               />
             ))}
           </div>
-        </div>
-        <div className="relative w-full flex-col gap-8 items-center justify-center overflow-visible mt-8 hidden sm:flex">
+        </motion.div>
+        <motion.div
+          className="relative w-full flex-col gap-8 items-center justify-center overflow-visible mt-8 hidden sm:flex"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+        >
           <div className="relative w-full flex items-center justify-center overflow-hidden">
-            <div className="group flex overflow-hidden p-2 [--gap:1rem] [gap:var(--gap)] flex-row">
-              <div className="flex shrink-0 justify-around [gap:var(--gap)] animate-marquee flex-row group-hover:[animation-play-state:paused] min-w-full">
+            <div className="group flex overflow-hidden p-2 [--gap:1rem] gap-4 flex-row">
+              <div
+                ref={rowRef}
+                className="flex shrink-0 justify-around gap-4 animate-marquee flex-row group-hover:[animation-play-state:paused]"
+                style={rowWidth ? { width: rowWidth * 2 } : {}}
+              >
                 {loopedTestimonials.map((testimonial, i) => (
                   <TestimonialCard 
                     key={`row1-${i}`}
@@ -101,8 +128,11 @@ export default function TestimonialsSection() {
             <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-background via-background/80 to-transparent z-20" />
           </div>
           <div className="relative w-full flex items-center justify-center overflow-hidden">
-            <div className="group flex overflow-hidden p-2 [--gap:1rem] [gap:var(--gap)] flex-row">
-              <div className="flex shrink-0 justify-around [gap:var(--gap)] animate-marquee-reverse flex-row group-hover:[animation-play-state:paused] min-w-full translate-x-32 md:translate-x-48">
+            <div className="group flex overflow-hidden p-2 [--gap:1rem] gap-4 flex-row">
+              <div
+                className="flex shrink-0 justify-around gap-4 animate-marquee-reverse flex-row translate-x-32 md:translate-x-48 group-hover:[animation-play-state:paused]"
+                style={rowWidth ? { width: rowWidth * 2 } : {}}
+              >
                 {loopedTestimonials.map((testimonial, i) => (
                   <TestimonialCard 
                     key={`row2-${i}`}
@@ -116,9 +146,9 @@ export default function TestimonialsSection() {
             <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-background via-background/80 to-transparent z-20" />
             <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-background via-background/80 to-transparent z-20" />
           </div>
-        </div>
+        </motion.div>
       </div>
-    </motion.section>
+    </section>
   );
 }
 
@@ -136,13 +166,9 @@ type TestimonialCardProps = {
 
 function TestimonialCard({ author, text, index }: TestimonialCardProps) {
   return (
-    <motion.div
+    <div
       className="bg-white/5 border border-white/10 rounded-2xl shadow-lg p-6 flex flex-col gap-3 min-w-[260px] max-w-[350px] backdrop-blur-md mx-2"
       style={{ boxShadow: "0 4px 32px 0 rgba(0,0,0,0.18)" }}
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.5, delay: (index || 0) * 0.07, ease: "easeOut" }}
     >
       <div className="flex gap-3">
         <img
@@ -156,6 +182,6 @@ function TestimonialCard({ author, text, index }: TestimonialCardProps) {
         </div>
       </div>
       <p className="text-gray-200 text-base leading-relaxed" dangerouslySetInnerHTML={{ __html: text }} />
-    </motion.div>
+    </div>
   );
 } 
