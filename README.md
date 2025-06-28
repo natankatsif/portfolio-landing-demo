@@ -1,4 +1,4 @@
-# 🚀 Launch UI — Adapted Portfolio Landing Page
+# 🚀 Launch UI — Adapted SaaS Landing Page
 
 ![Hero Preview](./public/preview.gif)
 
